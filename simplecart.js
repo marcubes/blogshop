@@ -11,13 +11,13 @@ function cart(a, b) {
         }
         return b = ""
     }
-    this.totalItems = 0, this.totalPrice = 0, this.totalPoids = 0, this.totalShip = 0, this.totalOrder = 0, this.items = new Array, this.userEmail = a, this.ItemColumns = ["Image", "Name", "Price", "Quantity", "Poids", "Total", "Supprimer"], this.initialize = function() {
+    this.totalItems = 0, this.totalPrice = 0, this.totalweight = 0, this.totalShip = 0, this.totalOrder = 0, this.items = new Array, this.userEmail = a, this.ItemColumns = ["Image", "Name", "Price", "Quantity", "Poids", "Total", "Supprimer"], this.initialize = function() {
         if (readCookie("simpleCart"))
-            for (data = readCookie("simpleCart").split("&"), this.totalItems = 1 * data[0], this.totalPrice = 1 * data[1], this.totalPoids = 1 * data[2], x = 3; x < data.length; x++) {
+            for (data = readCookie("simpleCart").split("&"), this.totalItems = 1 * data[0], this.totalPrice = 1 * data[1], this.totalweight = 1 * data[2], x = 3; x < data.length; x++) {
                 for (newItem = new item, itemData = data[x].split(","), i = 0, i = 0; i < itemData.length; i++) pair = itemData[i].split("="), newItem.addValue(pair[0], pair[1], pair[2]);
                 if (!(newItem.getValue("name") && newItem.getValue("price") && newItem.getValue("weight") && newItem.getValue("quantity"))) return alert("item must have price, name, and quantity!"), !1;
                 this.items[x - 3] = newItem
-            } else this.totalItems = 0, this.totalPrice = 0, this.totalPoids = 0;
+            } else this.totalItems = 0, this.totalPrice = 0, this.totalweight = 0;
         this.setUpEvents(), this.updateCookie(), this.updatePageElements()
     }, this.checkOutEvent = function() {
         return simpleCart.checkOut(), !1
@@ -45,24 +45,24 @@ function cart(a, b) {
             newItem.addValue("color", f + " : " + g)
         }
         if (!newItem.getValue("name") || !newItem.getValue("price") || !newItem.getValue("weight")) return alert("Item must have name, Poids and price to be added to the cart!"), !1;
-        for (showNotif(), isnew = !0, newItem.getValue("quantity") || newItem.addValue("quantity", 1), this.totalItems = this.totalItems + newItem.getValue("quantity"), a = 0, a = 0; a < this.items.length; a++) tempItem = this.items[a], tempItem.equalTo(newItem) && (tempItem.addValue("quantity", parseInt(tempItem.getValue("quantity")) + parseInt(newItem.getValue("quantity"))), this.totalPrice = this.totalPrice + parseFloat(tempItem.getValue("price")), this.totalPoids = this.totalPoids + parseFloat(tempItem.getValue("Poids")), isnew = !1);
-        isnew && (this.items[this.items.length] = newItem, this.totalPrice = this.totalPrice + parseFloat(newItem.getValue("price")), this.totalPoids = this.totalPoids + parseFloat(newItem.getValue("weight"))), this.updateCookie(), this.updatePageElements()
+        for (showNotif(), isnew = !0, newItem.getValue("quantity") || newItem.addValue("quantity", 1), this.totalItems = this.totalItems + newItem.getValue("quantity"), a = 0, a = 0; a < this.items.length; a++) tempItem = this.items[a], tempItem.equalTo(newItem) && (tempItem.addValue("quantity", parseInt(tempItem.getValue("quantity")) + parseInt(newItem.getValue("quantity"))), this.totalPrice = this.totalPrice + parseFloat(tempItem.getValue("price")), this.totalweight = this.totalweight + parseFloat(tempItem.getValue("Poids")), isnew = !1);
+        isnew && (this.items[this.items.length] = newItem, this.totalPrice = this.totalPrice + parseFloat(newItem.getValue("price")), this.totalweight = this.totalweight + parseFloat(newItem.getValue("weight"))), this.updateCookie(), this.updatePageElements()
     }, this.addItem = function(a) {
         var b = 0;
         for (b = 0; b < this.items.length; b++) {
             var c = this.items[b];
-            if (c.equalTo(a)) return c.addValue("quantity", parseInt(a.getValue("quantity")) + parseInt(c.getValue("quantity"))), this.totalItems = this.totalItems + parseInt(a.getValue("quantity")), this.totalPrice = this.totalPrice + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("price")), void(this.totalPoids = this.totalPoids + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("Poids")))
+            if (c.equalTo(a)) return c.addValue("quantity", parseInt(a.getValue("quantity")) + parseInt(c.getValue("quantity"))), this.totalItems = this.totalItems + parseInt(a.getValue("quantity")), this.totalPrice = this.totalPrice + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("price")), void(this.totalweight = this.totalweight + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("Poids")))
         }
-        this.items[this.items.length] = a, this.totalItems = this.totalItems + parseInt(a.getValue("quantity")), this.totalPrice = this.totalPrice + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("price")), this.totalPoids = this.totalPoids + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("Poids"))
+        this.items[this.items.length] = a, this.totalItems = this.totalItems + parseInt(a.getValue("quantity")), this.totalPrice = this.totalPrice + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("price")), this.totalweight = this.totalweight + parseInt(a.getValue("quantity")) * parseFloat(a.getValue("Poids"))
     }, this.updateCookie = function() {
-        for (cookieString = String(this.totalItems) + "&" + String(this.totalPrice) + "&" + String(this.totalPoids), x = 0, x = 0; x < this.items.length; x++) tempItem = this.items[x], cookieString = cookieString + "&" + tempItem.cookieString();
+        for (cookieString = String(this.totalItems) + "&" + String(this.totalPrice) + "&" + String(this.totalweight), x = 0, x = 0; x < this.items.length; x++) tempItem = this.items[x], cookieString = cookieString + "&" + tempItem.cookieString();
         createCookie("simpleCart", cookieString, 30)
     }, this.empty = function() {
-        return this.items = new Array, this.totalItems = 0, this.totalPrice = 0, this.totalPoids = 0, this.updateCookie(), this.updatePageElements(), !1
+        return this.items = new Array, this.totalItems = 0, this.totalPrice = 0, this.totalweight = 0, this.updateCookie(), this.updatePageElements(), !1
     }, this.deleteItem = function(a) {
         found = !1;
         var b = new Array;
-        for (x = 0; x < this.items.length; x++) tempItem = this.items[x], tempItem.equalTo(a) && (found = !0, this.totalItems = this.totalItems - parseFloat(tempItem.getValue("quantity")), this.totalPrice = this.totalPrice - parseFloat(tempItem.getValue("price")), this.totalPoids = this.totalPoids - parseFloat(tempItem.getValue("Poids"))), found ? x < this.items.length - 1 && (b[x] = this.items[x + 1]) : b[x] = this.items[x];
+        for (x = 0; x < this.items.length; x++) tempItem = this.items[x], tempItem.equalTo(a) && (found = !0, this.totalItems = this.totalItems - parseFloat(tempItem.getValue("quantity")), this.totalPrice = this.totalPrice - parseFloat(tempItem.getValue("price")), this.totalweight = this.totalweight - parseFloat(tempItem.getValue("Poids"))), found ? x < this.items.length - 1 && (b[x] = this.items[x + 1]) : b[x] = this.items[x];
         return this.items = b, this.updateCookie(), this.updatePageElements(), !1
     }, this.options = function() {
         var a = 0;
@@ -80,7 +80,7 @@ function cart(a, b) {
         for (0 == this.totalPrice ? this.totalOrder = 0 : this.totalOrder = parseInt(this.totalPrice) + parseInt(this.totalShip), a = 0, d = getElementsByClassName("simpleCart_orders"), a = 0; a < d.length; a++) b = d[a], b.innerHTML = this.returnTotalOrder();
         for (a = 0, d = getElementsByClassName("simpleCart_quantity"), a = 0; a < d.length; a++) b = d[a], b.innerHTML = String(this.totalItems);
         for (d = getElementsByClassName("fortotalPrice"), a = 0; a < d.length; a++) b = d[a], b.innerHTML = String(this.returnTotalHarga());
-        for (d = getElementsByClassName("simpleCart_Poids"), a = 0; a < d.length; a++) b = d[a], b.innerHTML = String(this.returnTotalPoids());
+        for (d = getElementsByClassName("simpleCart_Poids"), a = 0; a < d.length; a++) b = d[a], b.innerHTML = String(this.returntotalweight());
         for (d = getElementsByClassName("simpleCart_items"), a = 0; a < d.length; a++) {
             cartTable = d[a], newRow = document.createElement("div");
             for (var a = 0, f = 0; cartTable.childNodes[0];) cartTable.removeChild(cartTable.childNodes[0]);
@@ -89,7 +89,7 @@ function cart(a, b) {
                 for (tempItem = this.items[a], newRow = document.createElement("div"), f = 0, f = 0; f < this.ItemColumns.length; f++) tempCell = document.createElement("div"), tempCell.className = "item" + this.ItemColumns[f], "Image" == this.ItemColumns[f] && tempItem.getValue("image") && (tempCell.innerHTML = '<img src="' + tempItem.getValue("image") + '" />'), "Name" == this.ItemColumns[f] ? tempCell.innerHTML = "<b>" + tempItem.getValue("name") + "</b>" + c(tempItem.getValue("type")) + c(tempItem.getValue("color")) : "Price" == this.ItemColumns[f] ? tempCell.innerHTML = this.returnFormattedPrice(tempItem.getValue("price")) : "Options" == this.ItemColumns[f] && this.options() ? tempCell.innerHTML = tempItem.optionList() : "Quantity" == this.ItemColumns[f] ? tempCell.innerHTML = '<input type="number" onblur="simpleCart.updateQuantity(' + tempItem.functionString() + ",'new_quantity=' + this.value);cekHarga();return false;\"value=\"" + tempItem.getValue("quantity") + '" />' : "Poids" == this.ItemColumns[f] ? tempCell.innerHTML = this.returnFormattedPoids(tempItem.getValue("Poids")) + " g" : "Total" == this.ItemColumns[f] ? tempCell.innerHTML = this.returnFormattedPrice(tempItem.getValue("quantity") * tempItem.getValue("price")) : "Supprimer" == this.ItemColumns[f] && (tempCell.innerHTML = '<a class="removeButton" onclick="simpleCart.updateQuantity(' + tempItem.functionString() + ",'new_quantity=0');cekHarga();return false;\">Supprimer</a>"), newRow.appendChild(tempCell);
                 newRow.className = "itemContainer", cartTable.appendChild(newRow)
             }
-            newRow = document.createElement("div"), tempCell = document.createElement("div"), tempCell.innerHTML = String(this.totalItems), tempCell.className = "totalItems", newRow.appendChild(tempCell), tempCell = document.createElement("div"), tempCell.innerHTML = this.returnTotalPrice(), tempCell.className = "totalPrice", newRow.appendChild(tempCell), tempCell = document.createElement("div"), tempCell.innerHTML = this.returnTotalPoids(), tempCell.className = "totalPoids", newRow.appendChild(tempCell), newRow.className = "totalRow", cartTable.appendChild(newRow)
+            newRow = document.createElement("div"), tempCell = document.createElement("div"), tempCell.innerHTML = String(this.totalItems), tempCell.className = "totalItems", newRow.appendChild(tempCell), tempCell = document.createElement("div"), tempCell.innerHTML = this.returnTotalPrice(), tempCell.className = "totalPrice", newRow.appendChild(tempCell), tempCell = document.createElement("div"), tempCell.innerHTML = this.returntotalweight(), tempCell.className = "totalweight", newRow.appendChild(tempCell), newRow.className = "totalRow", cartTable.appendChild(newRow)
         }
         for (d = getElementsByClassName("simpleCart_table"), a = 0; a < d.length; a++) {
             cartTable = d[a];
@@ -105,8 +105,8 @@ function cart(a, b) {
         return this.totalPrice
     }, this.returnTotalPrice = function() {
         return this.returnFormattedPrice(this.totalPrice)
-    }, this.returnTotalPoids = function() {
-        return this.returnFormattedPoids(this.totalPoids)
+    }, this.returntotalweight = function() {
+        return this.returnFormattedPoids(this.totalweight)
     }, this.returnTotalShip = function() {
         return this.returnFormattedPrice(this.totalShip)
     }, this.returnTotalOrder = function() {
