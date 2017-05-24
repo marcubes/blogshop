@@ -11,7 +11,7 @@ function cart(a, b) {
         }
         return b = ""
     }
-    this.totalItems = 0, this.totalPrice = 0, this.totalWeight = 0, this.totalShip = 0, this.totalOrder = 0, this.items = new Array, this.userEmail = a, this.ItemColumns = ["Image", "Name", "Price", "Quantity", "Poids", "Total", "Supprimer"], this.initialize = function() {
+    this.totalItems = 0, this.totalPrice = 0, this.totalWeight = 0, this.totalShip = 0, this.totalOrder = 0, this.items = new Array, this.userEmail = a, this.ItemColumns = ["Image", "Name", "Price", "Quantity", "weight", "Total", "Supprimer"], this.initialize = function() {
         if (readCookie("simpleCart"))
             for (data = readCookie("simpleCart").split("&"), this.totalItems = 1 * data[0], this.totalPrice = 1 * data[1], this.totalWeight = 1 * data[2], x = 3; x < data.length; x++) {
                 for (newItem = new item, itemData = data[x].split(","), i = 0, i = 0; i < itemData.length; i++) pair = itemData[i].split("="), newItem.addValue(pair[0], pair[1], pair[2]);
