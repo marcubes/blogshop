@@ -46,7 +46,7 @@ function cart(a, b) {
         }
         if (!newItem.getValue("name") || !newItem.getValue("price") || !newItem.getValue("weight")) return alert("Item must have name, Poids and price to be added to the cart!"), !1;
         for (showNotif(), isnew = !0, newItem.getValue("quantity") || newItem.addValue("quantity", 1), this.totalItems = this.totalItems + newItem.getValue("quantity"), a = 0, a = 0; a < this.items.length; a++) tempItem = this.items[a], tempItem.equalTo(newItem) && (tempItem.addValue("quantity", parseInt(tempItem.getValue("quantity")) + parseInt(newItem.getValue("quantity"))), this.totalPrice = this.totalPrice + parseFloat(tempItem.getValue("price")), this.totalPoids = this.totalPoids + parseFloat(tempItem.getValue("Poids")), isnew = !1);
-        isnew && (this.items[this.items.length] = newItem, this.totalPrice = this.totalPrice + parseFloat(newItem.getValue("price")), this.totalPoids = this.totalPoids + parseFloat(newItem.getValue("Poids"))), this.updateCookie(), this.updatePageElements()
+        isnew && (this.items[this.items.length] = newItem, this.totalPrice = this.totalPrice + parseFloat(newItem.getValue("price")), this.totalPoids = this.totalPoids + parseFloat(newItem.getValue("weight"))), this.updateCookie(), this.updatePageElements()
     }, this.addItem = function(a) {
         var b = 0;
         for (b = 0; b < this.items.length; b++) {
